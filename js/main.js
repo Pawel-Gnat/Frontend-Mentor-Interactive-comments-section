@@ -15,7 +15,7 @@ const renderData = async () => {
 		createComment(element)
 
 		allReplies.forEach(element => {
-			// createReply(element)
+			createReply(element)
 			console.log(element)
 		})
 	})

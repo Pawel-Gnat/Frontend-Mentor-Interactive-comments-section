@@ -1,11 +1,12 @@
 const commentsContainer = document.querySelector('.comments-section')
+// const createdReplyBox = document.getElementsByClassName('reply-box')
 
 export const createComment = comment => {
-	const commentBox = document.createElement('div')
-	commentBox.classList.add('comment-box')
+	// const commentBox = document.createElement('div')
+	// commentBox.classList.add('comment-box')
 
-	const replyBox = document.createElement('div')
-	replyBox.classList.add('reply-box')
+	// const replyBox = document.createElement('div')
+	// replyBox.classList.add('reply-box')
 
 	const newComment = document.createElement('div')
 	newComment.classList.add('comment')
@@ -32,18 +33,24 @@ export const createComment = comment => {
     </div>
     `
 
-	commentsContainer.append(commentBox)
+	// commentsContainer.append(commentBox)
 	newComment.innerHTML = createdComment
-	commentBox.append(newComment)
-	commentBox.append(replyBox)
+	commentsContainer.append(newComment)
+	// commentBox.append(newComment)
+	// commentBox.append(replyBox)
 }
 
 export const createReply = reply => {
-	const newReply = document.createElement('reply')
+	const newReply = document.createElement('div')
 	newReply.classList.add('reply')
 	newReply.setAttribute('role', 'reply')
+	// const createdReplyBox = document.getElementsByClassName('reply-box')
+	// const createdCommentBox = document.getElementsByClassName('comment-box')
 
-	const replyBox = `
+	// const replyBox = document.createElement('div')
+	// replyBox.classList.add('reply-box')
+
+	const createdReply = `
     <div class="reply__user">
     <img src="${reply.user.image.png}" alt="Avatar of ${reply.user.username}" class="reply__user--image">
     <p class="reply__user--username">${reply.user.username}</p>
@@ -63,4 +70,13 @@ export const createReply = reply => {
     <p class="reply__react--reply">Reply</p>
     </div>
     `
+
+	// commentsContainer.append(replyBox)
+
+	newReply.innerHTML = createdReply
+	// replyBox.append(newReply)
+
+	commentsContainer.append(newReply)
+
+	// commentsContainer.append(newReply)
 }
