@@ -11,14 +11,14 @@ const renderData = async () => {
 	let allComments = dataArray.comments
 
 	allComments.forEach(element => {
-        let allReplies = element.replies
+		let allReplies = element.replies
 		createComment(element)
 
 		allReplies.forEach(element => {
 			createReply(element)
-			console.log(element)
 		})
 	})
 }
 renderData()
 
+// handle margin if reply-box is empty

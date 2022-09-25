@@ -15,71 +15,25 @@
 
 <body>
 	<main>
-
 		<section class="comments-section">
+			<div class="comments-area"></div>
+			<form class="comments-profile">
+				<div class="comments-profile__textarea">
+					<textarea type="text" id="comment" class="comments-profile__textarea--input"
+						placeholder="Add a comment..." role="textbox"></textarea>
 
-			<div class="comment-box">
-				<!-- <div class="comment">
-					<div class="comment__user">
-						<img src="./images/avatars/image-amyrobson.png" alt="" class="comment__user--image">
-						<p class="comment__user--username">amyrobson</p>
-					</div>
-					<div class="comment__data">
-						<p class="comment__data--createdat">1 month ago</p>
-					</div>
-					<div class="comment__content">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quod beatae
-						harum dolor corrupti quidem fuga aut modi a non hic. Sint nihil, ut saepe sapiente ab iure
-						quaerat
-						praesentium necessitatibus.</div>
-					<div class="comment__score">
-						<img src="./images/icon-plus.svg" alt="Add one point to comment score"
-							class="comment__score--icon">
-						<p class="comment__score--points">12</p>
-						<img src="./images/icon-minus.svg" alt="Subtract one point to comment score"
-							class="comment__score--icon">
-					</div>
-					<div class="comment__react">
-						<img src="./images/icon-reply.svg" alt="Reply to a comment">
-						<p class="comment__react--reply">Reply</p>
-					</div>
-				</div> -->
-
-
-				<div class="reply-box">
-
-					<!-- <div class="reply">
-						<div class="reply__user">
-							<img src="./images/avatars/image-amyrobson.png" alt="" class="reply__user--image">
-							<p class="reply__user--username">amyrobson</p>
-						</div>
-						<div class="reply__data">
-							<p class="reply__data--createdat">1 month ago</p>
-						</div>
-						<div class="reply__content">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quod
-							beatae
-							harum dolor corrupti quidem fuga aut modi a non hic. Sint nihil, ut saepe sapiente ab iure
-							quaerat
-							praesentium necessitatibus.</div>
-						<div class="reply__score">
-							<img src="./images/icon-plus.svg" alt="Add one point to comment score"
-								class="reply__score--icon">
-							<p class="reply__score--points">12</p>
-							<img src="./images/icon-minus.svg" alt="Subtract one point to comment score"
-								class="reply__score--icon">
-						</div>
-						<div class="reply__react">
-							<img src="./images/icon-reply.svg" alt="Reply to a reply">
-							<p class="reply__react--reply">Reply</p>
-						</div>
-					</div> -->
-
+					<label for="comment" class="comments-profile__textarea--label">Textarea for your own comment</label>
 				</div>
-
-			</div>
-
+				<div class="comments-profile__user">
+					<img src="./images/avatars/image-juliusomo.png" alt="Avatar of logged person"
+						class="comments-profile__user--image">
+				</div>
+				<div class="comments-profile__react">
+					<button class="comments-profile__react--btn">send</button>
+				</div>
+			</form>
 
 		</section>
-
 	</main>
 
 	<footer>

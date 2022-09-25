@@ -1,12 +1,8 @@
-const commentsContainer = document.querySelector('.comments-section')
-// const createdReplyBox = document.getElementsByClassName('reply-box')
+const commentsContainer = document.querySelector('.comments-area')
 
 export const createComment = comment => {
-	// const commentBox = document.createElement('div')
-	// commentBox.classList.add('comment-box')
-
-	// const replyBox = document.createElement('div')
-	// replyBox.classList.add('reply-box')
+	const replyBox = document.createElement('div')
+	replyBox.classList.add('reply-box')
 
 	const newComment = document.createElement('div')
 	newComment.classList.add('comment')
@@ -20,35 +16,27 @@ export const createComment = comment => {
     <div class="comment__data">
     <p class="comment__data--createdat">${comment.createdAt}</p>
     </div>
-    <div class="comment__content">${comment.content}</div>
+    <div class="comment__content"><span class="comment__content--text">${comment.content}</span></div>
     <div class="comment__score">
-    <img src="./images/icon-plus.svg" alt="Add one point to comment score" class="comment__score--icon">
+    <button class="comment__score--icon"><img src="./images/icon-plus.svg" alt="Add one point to comment score"></button>
     <p class="comment__score--points">${comment.score}</p>
-    <img src="./images/icon-minus.svg" alt="Subtract one point to comment score"
-        class="comment__score--icon">
+    <button class="comment__score--icon"><img src="./images/icon-minus.svg" alt="Subtract one point to comment score"></button>
     </div>
     <div class="comment__react">
-    <img src="./images/icon-reply.svg" alt="Reply to a comment">
-    <p class="comment__react--reply">Reply</p>
+    <button class="comment__react--btn"><img src="./images/icon-reply.svg" alt="Reply to a comment">Reply</button>
     </div>
     `
 
-	// commentsContainer.append(commentBox)
 	newComment.innerHTML = createdComment
 	commentsContainer.append(newComment)
-	// commentBox.append(newComment)
-	// commentBox.append(replyBox)
+	commentsContainer.append(replyBox)
 }
 
 export const createReply = reply => {
 	const newReply = document.createElement('div')
 	newReply.classList.add('reply')
 	newReply.setAttribute('role', 'reply')
-	// const createdReplyBox = document.getElementsByClassName('reply-box')
-	// const createdCommentBox = document.getElementsByClassName('comment-box')
-
-	// const replyBox = document.createElement('div')
-	// replyBox.classList.add('reply-box')
+	const createdReplyBox = Array.from(document.getElementsByClassName('reply-box'))
 
 	const createdReply = `
     <div class="reply__user">
@@ -58,25 +46,20 @@ export const createReply = reply => {
     <div class="reply__data">
     <p class="reply__data--createdat">${reply.createdAt}</p>
     </div>
-    <div class="reply__content">${reply.content}</div>
+    <div class="reply__content"><span class="reply__content--reply-to">@${reply.replyingTo}</span> <span class="reply__content--text">${reply.content}</span></div>
     <div class="reply__score">
-    <img src="./images/icon-plus.svg" alt="Add one point to comment score" class="reply__score--icon">
+    <button class="reply__score--icon"><img src="./images/icon-plus.svg" alt="Add one point to reply score"></button>
     <p class="reply__score--points">${reply.score}</p>
-    <img src="./images/icon-minus.svg" alt="Subtract one point to comment score"
-        class="reply__score--icon">
+    <button class="reply__score--icon"><img src="./images/icon-minus.svg" alt="Subtract one point to reply score"></button>
     </div>
     <div class="reply__react">
-    <img src="./images/icon-reply.svg" alt="Reply to a comment">
-    <p class="reply__react--reply">Reply</p>
+    <button class="reply__react--btn"><img src="./images/icon-reply.svg" alt="Reply to a comment">Reply</button>
     </div>
     `
 
-	// commentsContainer.append(replyBox)
-
 	newReply.innerHTML = createdReply
-	// replyBox.append(newReply)
 
-	commentsContainer.append(newReply)
-
-	// commentsContainer.append(newReply)
+	createdReplyBox.forEach(box => {
+		box.append(newReply)
+	})
 }
