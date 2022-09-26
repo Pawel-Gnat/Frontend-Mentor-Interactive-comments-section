@@ -79,6 +79,15 @@ textarea {
   color: #324152;
 }
 
+.comment__user--you,
+.reply__user--you {
+  font-size: 1.2rem;
+  display: block;
+  padding: 0.2rem 0.5rem;
+  background-color: #5457b6;
+  color: white;
+}
+
 .comment__data,
 .reply__data {
   -ms-grid-row: 1;
@@ -92,6 +101,7 @@ textarea {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  margin-left: 1rem;
   color: #67727e;
 }
 
@@ -157,13 +167,20 @@ textarea {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
   -webkit-box-pack: end;
       -ms-flex-pack: end;
           justify-content: flex-end;
+  gap: 1.7rem;
 }
 
-.comment__react--btn,
-.reply__react--btn {
+.comment__react--reply-btn, .comment__react--delete-btn, .comment__react--edit-btn,
+.reply__react--reply-btn,
+.reply__react--delete-btn,
+.reply__react--edit-btn {
   font-weight: 500;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -178,13 +195,14 @@ textarea {
   cursor: pointer;
 }
 
+.comment__react--delete-btn,
+.reply__react--delete-btn {
+  color: #ed6468;
+}
+
 .reply {
   margin-left: 1.7rem;
   margin-top: 0;
-}
-
-.reply__data {
-  margin-left: 1rem;
 }
 
 .reply__content--reply-to {

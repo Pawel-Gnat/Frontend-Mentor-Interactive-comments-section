@@ -61,12 +61,21 @@ textarea {
 			font-weight: 500;
 			color: $dark_blue;
 		}
+
+		&--you {
+			font-size: 1.2rem;
+			display: block;
+			padding: 0.2rem 0.5rem;
+			background-color: $moderate_blue;
+			color: $white;
+		}
 	}
 
 	&__data {
 		grid-area: 1 / 2 / 2 / 3;
 		display: flex;
 		align-items: center;
+		margin-left: 1rem;
 		color: $grayish_blue;
 	}
 
@@ -101,9 +110,13 @@ textarea {
 	&__react {
 		grid-area: 3 / 2 / 4 / 3;
 		display: flex;
+		flex-direction: row;
 		justify-content: flex-end;
+		gap: 1.7rem;
 
-		&--btn {
+		&--reply-btn,
+		&--delete-btn,
+		&--edit-btn {
 			font-weight: 500;
 			display: flex;
 			align-items: center;
@@ -113,16 +126,16 @@ textarea {
 			background-color: transparent;
 			cursor: pointer;
 		}
+
+		&--delete-btn {
+			color: $soft_red;
+		}
 	}
 }
 
 .reply {
 	margin-left: 1.7rem;
 	margin-top: 0;
-
-	&__data {
-		margin-left: 1rem;
-	}
 
 	&__content {
 		&--reply-to {

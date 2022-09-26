@@ -1,4 +1,7 @@
-import { createComment, createReply } from './comments.js'
+import * as commentsModule from './comments.js'
+
+const sendNewCommentBtn = document.querySelector('.comments-profile__react--btn')
+const repliesBox = document.getElementsByClassName('reply-box')
 
 const getData = async () => {
 	let response = await fetch('./data.json')
@@ -9,16 +12,31 @@ const getData = async () => {
 const renderData = async () => {
 	let dataArray = await getData()
 	let allComments = dataArray.comments
+	let currentUser = dataArray.currentUser
+	const { image, username } = currentUser
 
 	allComments.forEach(element => {
 		let allReplies = element.replies
-		createComment(element)
+		commentsModule.displayComments(element)
 
 		allReplies.forEach(element => {
-			createReply(element)
+			commentsModule.displayReplies(element)
 		})
+	})
+
+	sendNewCommentBtn.addEventListener('click', e => {
+		let inputText = document.querySelector('.comments-profile__textarea--input').value
+
+		if (inputText == '') {
+			window.alert("Text area can't be empty")
+		} else {
+			commentsModule.createComment(image, username)
+			inputText = ''
+			// console.log(inputText)
+		}
 	})
 }
 renderData()
+
 
 // handle margin if reply-box is empty
