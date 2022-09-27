@@ -39,7 +39,7 @@ const renderData = async () => {
 	document.addEventListener('click', function (e) {
 		if (e.target.classList.contains('reply-btn')) {
 			console.log(e.target.parentElement.parentElement)
-			// commentsModule.createReply(image)
+			commentsModule.createReply(image)
 		}
 	})
 
