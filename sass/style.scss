@@ -37,7 +37,8 @@ textarea {
 .reply {
 	display: grid;
 	font-size: 1.6rem;
-	grid-template-columns: repeat(2, 1fr);
+	// grid-template-columns: repeat(2, 1fr);
+	grid-template-columns: 0.8fr 1.2fr;
 	grid-template-rows: repeat(3, auto);
 	grid-row-gap: 2rem;
 	padding: 1.5rem;
@@ -50,7 +51,7 @@ textarea {
 		display: flex;
 		flex-direction: row;
 		align-items: center;
-		gap: 2rem;
+		gap: 1rem;
 
 		&--image {
 			display: block;
@@ -113,6 +114,7 @@ textarea {
 		flex-direction: row;
 		justify-content: flex-end;
 		gap: 1.7rem;
+		// gap: 1rem;
 
 		&--reply-btn,
 		&--delete-btn,

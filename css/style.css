@@ -36,8 +36,8 @@ textarea {
   display: -ms-grid;
   display: grid;
   font-size: 1.6rem;
-  -ms-grid-columns: (1fr)[2];
-      grid-template-columns: repeat(2, 1fr);
+  -ms-grid-columns: 0.8fr 1.2fr;
+      grid-template-columns: 0.8fr 1.2fr;
   -ms-grid-rows: (auto)[3];
       grid-template-rows: repeat(3, auto);
   grid-row-gap: 2rem;
@@ -64,7 +64,7 @@ textarea {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  gap: 2rem;
+  gap: 1rem;
 }
 
 .comment__user--image,

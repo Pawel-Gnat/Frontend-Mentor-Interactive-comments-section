@@ -23,7 +23,7 @@ export const displayComments = comment => {
     <button class="comment__score--icon"><img src="./images/icon-minus.svg" alt="Subtract one point to comment score"></button>
     </div>
     <div class="comment__react">
-    <button class="comment__react--reply-btn"><img src="./images/icon-reply.svg" alt="Reply to a comment">Reply</button>
+    <button class="comment__react--reply-btn reply-btn"><img src="./images/icon-reply.svg" alt="Reply to a comment">Reply</button>
     </div>
     `
 
@@ -53,7 +53,7 @@ export const displayReplies = reply => {
     <button class="reply__score--icon"><img src="./images/icon-minus.svg" alt="Subtract one point to reply score"></button>
     </div>
     <div class="reply__react">
-    <button class="reply__react--reply-btn"><img src="./images/icon-reply.svg" alt="Reply to a comment">Reply</button>
+    <button class="reply__react--reply-btn reply-btn"><img src="./images/icon-reply.svg" alt="Reply to a comment">Reply</button>
     </div>
     `
 
@@ -70,9 +70,6 @@ export const displayReplies = reply => {
 }
 
 export const createComment = (image, username) => {
-	const replyBox = document.createElement('div')
-	replyBox.classList.add('reply-box')
-
 	const newComment = document.createElement('div')
 	newComment.classList.add('comment')
 	newComment.setAttribute('role', 'comment')
@@ -103,5 +100,42 @@ export const createComment = (image, username) => {
 
 	newComment.innerHTML = createdComment
 	commentsContainer.append(newComment)
-	commentsContainer.append(replyBox)
+}
+
+export const createReply = image => {
+	const newReply = document.createElement('div')
+	newReply.classList.add('reply')
+	newReply.setAttribute('role', 'reply')
+
+	const createdReplyBox = Array.from(document.getElementsByClassName('reply-box'))
+
+	const createdReply = `
+    <form class="comments-profile">
+    <div class="comments-profile__textarea">
+    <textarea type="text" id="comment" class="comments-profile__textarea--input"></textarea>
+    </div>
+    <div class="comments-profile__user">
+    <img src="${image.png}" class="comments-profile__user--image">
+    </div>
+    <div class="comments-profile__react">
+    <button type="button" class="comments-profile__react--btn">reply</button>
+    </div>
+    </form>
+    `
+
+	newReply.innerHTML = createdReply
+
+	createdReplyBox.forEach(box => {
+		box.append(newReply)
+		// box.onclick = function target(e) {
+		//     console.log(e.target.parentElement);
+		// }
+		// box.target.parentElement.parentElement.append(newReply)
+		// box.target.parentElement
+		// function target(box) {
+		// 	console.log(e.target.parentElement.parentElement)
+		// }
+	})
+
+	// commentsContainer.append(newReply)
 }
