@@ -1,5 +1,13 @@
 // const commentsContainer = document.querySelector('.comments-area')
 const chatBox = document.querySelector('.chatbox')
+let loggedUser = {}
+
+export function getUserInfo(user) {
+	loggedUser = {
+		name: user.username,
+		image: user.image.webp,
+	}
+}
 
 export function renderComments(element) {
 	const textbox = document.createElement('div')
@@ -9,7 +17,7 @@ export function renderComments(element) {
 	comment.classList.add('comment')
 	comment.setAttribute('role', 'comment')
 
-	comment.innerHTML = createCommentFromData(element)
+	comment.innerHTML = createComment(element)
 	textbox.append(comment)
 
 	let replies = element.replies
@@ -24,7 +32,7 @@ export function renderComments(element) {
 			reply.classList.add('reply')
 			reply.setAttribute('role', 'reply')
 
-			reply.innerHTML = createCommentFromData(rep)
+			reply.innerHTML = createComment(rep)
 			replyArea.append(reply)
 		})
 	}
@@ -32,17 +40,19 @@ export function renderComments(element) {
 	chatBox.append(textbox)
 }
 
-function createCommentFromData({ content, createdAt, score, user, replies }) {
+function createComment({ content, createdAt = now, score = 0, user, replyingTo }) {
 	const commentData = `
     <div class="user-area">
         <figure>
           <img src="${user.image.webp}" class="user-area__image" alt="" aria-hidden="true">
           <figcaption class="user-area__username">${user.username}</figcaption>
         </figure>
+		${checkIfCommentIsFromLoggedUser(user)}
         <span class="user-area__timestamp">${createdAt}</span>
     </div>
     <div class="text-area">
-        <p class="text-area__content">${content}</p>
+		${checkIfCommentIsAReply(replyingTo)}
+        <span class="text-area__content">${content}</span>
     </div>
     <form class="counter-area"> 
         <button type="button" class="counter-area__btn" aria-label="Add one point to a comment"><img src="./images/icon-plus.svg" alt="" aria-hidden="true"></button>
@@ -54,14 +64,23 @@ function createCommentFromData({ content, createdAt, score, user, replies }) {
     </div>
     `
 
-	// createReplyFromData(replies)
 	return commentData
 }
 
-/* <span class="text-area__addressee">${replies}</span> */
+function checkIfCommentIsAReply(reply) {
+	if (reply) {
+		return `<span class="text-area__addressee">@${reply}</span>`
+	} else {
+		return ''
+	}
+}
 
-function createReplyFromData(reply) {
-	console.log(reply)
+function checkIfCommentIsFromLoggedUser(user) {
+	if (user.username === loggedUser.name) {
+		return `<span class="user-area__logged-user">you</span>`
+	} else {
+		return ''
+	}
 }
 
 // export const displayComments = comment => {
