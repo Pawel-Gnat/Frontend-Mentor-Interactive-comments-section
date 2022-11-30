@@ -40,7 +40,8 @@ button {
 }
 
 /* MAIN */
-.chatbox {
+.chatbox,
+.profile {
   margin: 3rem 1.5rem 1.5rem;
 }
 
@@ -50,8 +51,10 @@ button {
 }
 
 .comment,
-.reply {
+.reply,
+.profile {
   display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
   grid-row-gap: 2rem;
   padding: 1.5rem;
   margin-top: 1.7rem;
@@ -76,11 +79,6 @@ button {
       -ms-flex-align: center;
           align-items: center;
 }
-.user-area__image {
-  display: block;
-  height: 3.3rem;
-  aspect-ratio: 1/1;
-}
 .user-area__username {
   font-weight: 500;
   margin-left: 1.5rem;
@@ -98,6 +96,12 @@ button {
 .user-area__timestamp {
   margin-left: 1.5rem;
   color: hsl(211deg, 10%, 45%);
+}
+
+.image {
+  display: block;
+  height: 3.3rem;
+  aspect-ratio: 1/1;
 }
 
 .text-area {
@@ -140,13 +144,54 @@ button {
 }
 .action-area__btn {
   padding: 1rem 0rem;
+  margin-left: 0.5rem;
 }
 .action-area__btn img {
-  margin-right: 1rem;
+  margin: 0rem 1rem;
 }
 
-.btn--reply {
+.btn--reply, .btn--edit {
   color: hsl(238deg, 40%, 52%);
+}
+.btn--delete {
+  color: hsl(358deg, 79%, 66%);
+}
+.btn--user {
+  font-size: 1.8rem;
+  text-transform: uppercase;
+  width: 10.5rem;
+  height: 5rem;
+  border-radius: 1rem;
+  background-color: hsl(238deg, 40%, 52%);
+  color: hsl(0deg, 0%, 100%);
+}
+
+.profile {
+  position: relative;
+}
+.profile__textarea {
+  grid-area: 1/1/2/3;
+  resize: vertical;
+  min-height: 9.5rem;
+  padding: 1.7rem 2.5rem;
+  border: 1px solid hsl(223deg, 19%, 93%);
+  border-radius: 1rem;
+  color: hsl(211deg, 10%, 45%);
+}
+.profile__label {
+  position: absolute;
+  visibility: hidden;
+}
+.profile__user {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.profile__btn {
+  margin-left: auto;
 }
 
 footer {
