@@ -1,4 +1,4 @@
-const sendNewCommentBtn = document.querySelector('.btn--send')
+const sendNewCommentBtn = document.querySelector('#btn-send')
 const chatBox = document.querySelector('.chatbox')
 let loggedUser = {}
 
@@ -7,7 +7,7 @@ export function getUserInfo(user) {
 		name: user.username,
 		image: user.image.webp,
 		displayImage: function () {
-			displayLoggedUserImage(this.image)
+			renderLoggedUserCommentHandler(this.image)
 		},
 	}
 }
@@ -16,7 +16,7 @@ setTimeout(() => {
 	loggedUser.displayImage()
 }, 500)
 
-function displayLoggedUserImage(img) {
+function renderLoggedUserCommentHandler(img) {
 	const image = document.querySelector('.profile__user > img')
 	image.src = img
 }
@@ -111,7 +111,7 @@ function handleCommentButtons(user) {
 }
 
 function createNewComment() {
-	const textarea = document.querySelector('.profile__textarea')
+	const textarea = document.querySelector('#comment')
 
 	let newComment = {
 		content: textarea.value,
@@ -125,4 +125,50 @@ function createNewComment() {
 	textarea.value = ''
 }
 
+function createLoggedUserCommentContainer(text, image, action) {
+	let commentContainer = document.createElement('form')
+	commentContainer.classList.add('profile')
+
+	commentContainer.innerHTML = `
+			<textarea type="text" id="comment" class="profile__textarea" placeholder="Add a comment..."
+				role="textbox">${text}</textarea>
+			<label for="comment" class="profile__label">Textarea for your own comment</label>
+			<figure class="profile__user">
+				<img src="${image}" class="profile__user-image image" alt="" aria-hidden="true">
+			</figure>
+			<button type="button" class="profile__btn btn--user btn--${action}" aria-label="${action}">${action}</button>
+	`
+
+	return commentContainer
+}
+
+function handleComment(e, action) {
+	let commentContainer = e.target.parentElement.parentElement
+	let parentOfCommentContainer = commentContainer.parentElement
+
+	if (action === 'remove') {
+		commentContainer.remove()
+	}
+
+	if (action === 'edit') {
+		let text = commentContainer.querySelector('.text-area').innerText
+		commentContainer.remove()
+		parentOfCommentContainer.append(createLoggedUserCommentContainer(text, loggedUser.image, 'update'))
+	}
+}
+
 sendNewCommentBtn.addEventListener('click', createNewComment)
+
+chatBox.addEventListener('click', e => {
+	if (e.target.classList.contains('btn--delete')) {
+		handleComment(e, 'remove')
+	}
+
+	if (e.target.classList.contains('btn--edit')) {
+		handleComment(e, 'edit')
+	}
+
+	if (e.target.classList.contains('btn--reply')) {
+		handleComment(e, 'reply')
+	}
+})
