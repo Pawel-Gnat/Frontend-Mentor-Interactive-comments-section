@@ -1,6 +1,12 @@
 const sendNewCommentBtn = document.querySelector('#btn-send')
 const chatBox = document.querySelector('.chatbox')
 let loggedUser = {}
+let text
+let data
+let score
+let commentContainer
+let parentOfCommentContainer
+let replying
 
 export function getUserInfo(user) {
 	loggedUser = {
@@ -25,12 +31,13 @@ export function renderComments(element) {
 	const textbox = document.createElement('div')
 	textbox.classList.add('textbox')
 
-	const comment = document.createElement('div')
-	comment.classList.add('comment')
-	comment.setAttribute('role', 'comment')
+	// const comment = document.createElement('div')
+	// comment.classList.add('comment')
+	// comment.setAttribute('role', 'comment')
 
-	comment.innerHTML = createComment(element)
-	textbox.append(comment)
+	// comment.innerHTML = createComment(element, 'comment')
+	// textbox.append(comment)
+	textbox.append(createComment(element, 'comment'))
 
 	let replies = element.replies ?? false
 
@@ -40,21 +47,26 @@ export function renderComments(element) {
 		textbox.append(replyArea)
 
 		replies.forEach(rep => {
-			const reply = document.createElement('div')
-			reply.classList.add('reply')
-			reply.setAttribute('role', 'reply')
+			// const reply = document.createElement('div')
+			// reply.classList.add('reply')
+			// reply.setAttribute('role', 'reply')
 
-			reply.innerHTML = createComment(rep)
-			replyArea.append(reply)
+			// reply.innerHTML = createComment(rep, 'reply')
+			// replyArea.append(reply)
+			replyArea.append(createComment(rep, 'reply'))
 		})
 	}
 
 	chatBox.append(textbox)
 }
 
-function createComment({ content, createdAt, score, user, replyingTo }) {
-	let image = user.image?.webp ?? loggedUser.image
-	let name = user.username ?? loggedUser.name
+function createComment({ content, createdAt, score, user, replyingTo }, role) {
+	let image = user?.image?.webp ?? loggedUser.image
+	let name = user?.username ?? loggedUser.name
+
+	const commentBox = document.createElement('div')
+	commentBox.classList.add(role)
+	commentBox.setAttribute('role', role)
 
 	const commentData = `
     <div class="user-area">
@@ -79,7 +91,9 @@ function createComment({ content, createdAt, score, user, replyingTo }) {
     </div>
     `
 
-	return commentData
+	commentBox.innerHTML = commentData
+	// return commentData
+	return commentBox
 }
 
 function markTheAddressee(reply) {
@@ -143,15 +157,23 @@ function createLoggedUserCommentContainer(text, image, action) {
 }
 
 function handleComment(e, action) {
-	let commentContainer = e.target.parentElement.parentElement
-	let parentOfCommentContainer = commentContainer.parentElement
+	commentContainer = e.target.parentElement.parentElement
+	parentOfCommentContainer = commentContainer.parentElement
 
 	if (action === 'remove') {
 		commentContainer.remove()
 	}
 
 	if (action === 'edit') {
-		let text = commentContainer.querySelector('.text-area').innerText
+		let allText = commentContainer.querySelector('.text-area').innerText
+		replying = allText.split(' ').shift()
+		text = allText
+			.split(' ')
+			.filter(word => word !== replying)
+			.join(' ')
+		data = commentContainer.querySelector('.user-area__timestamp').textContent
+		score = commentContainer.querySelector('.counter-area__score').value
+
 		commentContainer.remove()
 		parentOfCommentContainer.append(createLoggedUserCommentContainer(text, loggedUser.image, 'update'))
 	}
@@ -170,5 +192,10 @@ chatBox.addEventListener('click', e => {
 
 	if (e.target.classList.contains('btn--reply')) {
 		handleComment(e, 'reply')
+	}
+
+	if (e.target.classList.contains('btn--update')) {
+		// createComment(text, data, score, loggedUser, replyingTo)
+		parentOfCommentContainer.append(createComment(text, data, score, loggedUser, replying))
 	}
 })
