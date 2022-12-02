@@ -1,7 +1,6 @@
 const sendNewCommentBtn = document.querySelector('#btn-send')
 const chatBox = document.querySelector('.chatbox')
 const commentModalWindow = document.querySelector('#comment-delete')
-// const counter = Array.from(document.querySelectorAll('.counter-area'))
 const body = document.querySelector('body')
 let loggedUser = {}
 let createdAt
