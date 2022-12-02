@@ -45,6 +45,16 @@ input {
   background-color: transparent;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 button {
   -webkit-transition: opacity 0.3s;
   transition: opacity 0.3s;
@@ -164,6 +174,9 @@ textarea:focus {
 .counter-area__score {
   width: 100%;
   text-align: center;
+}
+.counter-area img {
+  pointer-events: none;
 }
 
 .action-area {

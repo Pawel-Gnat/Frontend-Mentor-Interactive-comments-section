@@ -75,9 +75,9 @@ function createComment({ content, createdAt, score, user, replyingTo }, role) {
         <span class="text-area__content">${content}</span>
     </div>
     <form class="counter-area"> 
-        <button type="button" class="counter-area__btn" aria-label="Add one point to a comment"><img src="./images/icon-plus.svg" alt="" aria-hidden="true"></button>
-        <input class="counter-area__score" value="${score}" step="1" disabled></input>
-        <button type="button" class="counter-area__btn" aria-label="Subtract one point to a comment"><img src="./images/icon-minus.svg" alt="" aria-hidden="true"></button>
+        <button type="button" class="counter-area__btn" data-value="+" aria-label="Add one point to a comment"><img src="./images/icon-plus.svg" alt="" aria-hidden="true"></button>
+        <input type="number" class="counter-area__score" value="${score}" step="1" disabled></input>
+        <button type="button" class="counter-area__btn" data-value="-" aria-label="Subtract one point to a comment"><img src="./images/icon-minus.svg" alt="" aria-hidden="true"></button>
     </form>
     <div class="action-area">
 		${handleCommentButtons(name)}
@@ -231,6 +231,26 @@ chatBox.addEventListener('click', e => {
 	if (e.target.classList.contains('btn--reply') && e.target.classList.contains('btn--user')) {
 		replyArea.append(createComment({ content, createdAt: 'now', score: 0, loggedUser, replyingTo }, role))
 		parent.remove()
+	}
+
+	if (e.target.dataset.value === '+') {
+		score = parent.querySelector('input')
+
+		if (score.value - score.defaultValue >= 1) {
+			return
+		}
+
+		score.stepUp()
+	}
+
+	if (e.target.dataset.value === '-') {
+		score = parent.querySelector('input')
+
+		if (score.defaultValue - score.value >= 1) {
+			return
+		}
+
+		score.stepDown()
 	}
 })
 
