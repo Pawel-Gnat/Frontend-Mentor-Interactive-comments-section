@@ -120,6 +120,10 @@ function handleCommentButtons(user) {
 function createNewComment() {
 	const textarea = document.querySelector('#comment')
 
+	if (textarea.value === '') {
+		return
+	}
+
 	let newComment = {
 		content: textarea.value,
 		createdAt: 'now',
@@ -224,11 +228,15 @@ chatBox.addEventListener('click', e => {
 	}
 
 	if (e.target.classList.contains('btn--update')) {
+		if (content === '') return
+
 		parentOfCommentContainer.append(createComment({ content, createdAt, score, loggedUser, replyingTo }, role))
 		parent.remove()
 	}
 
 	if (e.target.classList.contains('btn--reply') && e.target.classList.contains('btn--user')) {
+		if (content === '') return
+
 		replyArea.append(createComment({ content, createdAt: 'now', score: 0, loggedUser, replyingTo }, role))
 		parent.remove()
 	}
