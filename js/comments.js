@@ -1,5 +1,7 @@
 const sendNewCommentBtn = document.querySelector('#btn-send')
 const chatBox = document.querySelector('.chatbox')
+const commentModalWindow = document.querySelector('#comment-delete')
+const body = document.querySelector('body')
 let loggedUser = {}
 let createdAt
 let score
@@ -66,7 +68,7 @@ function createComment({ content, createdAt, score, user, replyingTo }, role) {
 		${markTheLoggedUser(name)}
         <span class="user-area__timestamp">${createdAt}</span>
     </div>
-    <div class="text-area">
+    <div class="text-area text">
 		${markTheAddressee(replyingTo)}
         <span class="text-area__content">${content}</span>
     </div>
@@ -150,7 +152,8 @@ function handleComment(e, action) {
 	role = commentContainer.getAttribute('role')
 
 	if (action === 'remove') {
-		commentContainer.remove()
+		commentModalWindow.showModal()
+		body.classList.add('scroll-block')
 	}
 
 	if (action === 'edit') {
@@ -210,5 +213,16 @@ chatBox.addEventListener('click', e => {
 	if (e.target.classList.contains('btn--reply') && e.target.classList.contains('btn--user')) {
 		replyArea.append(createComment({ content, createdAt: 'now', score: 0, loggedUser, replyingTo }, role))
 		parent.remove()
+	}
+})
+
+commentModalWindow.addEventListener('click', e => {
+	if (e.target.type === 'button') {
+		commentModalWindow.close()
+		body.classList.remove('scroll-block')
+	}
+
+	if (e.target.classList.contains('btn--modal-delete')) {
+		commentContainer.remove()
 	}
 })

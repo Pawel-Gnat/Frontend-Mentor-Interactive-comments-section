@@ -25,6 +25,18 @@
 			</figure>
 			<button type="button" id="btn-send" class="profile__btn btn--user btn--send" aria-label="Send">send</button>
 		</form>
+		<dialog id="comment-delete" class="modal">
+			<p class="modal__heading">Delete comment</p>
+			<p class="modal__info text">Are you sure you want to delete this comment? This will remove the comment and
+				can't
+				be undone.</p>
+			<div class="modal__btn-container">
+				<button type="button" class="modal__btn btn--user btn--modal-cancel" aria-label="cancel">no,
+					cancel</button>
+				<button type="button" class="modal__btn btn--user btn--modal-delete" aria-label="delete">yes,
+					delete</button>
+			</div>
+		</dialog>
 	</main>
 
 	<footer class="wrapper">
