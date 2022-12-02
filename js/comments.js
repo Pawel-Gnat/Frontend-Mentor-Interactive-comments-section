@@ -1,12 +1,11 @@
 const sendNewCommentBtn = document.querySelector('#btn-send')
 const chatBox = document.querySelector('.chatbox')
 let loggedUser = {}
-let text
-let data
+let createdAt
 let score
 let commentContainer
 let parentOfCommentContainer
-let replying
+let replyingTo
 
 export function getUserInfo(user) {
 	loggedUser = {
@@ -31,12 +30,6 @@ export function renderComments(element) {
 	const textbox = document.createElement('div')
 	textbox.classList.add('textbox')
 
-	// const comment = document.createElement('div')
-	// comment.classList.add('comment')
-	// comment.setAttribute('role', 'comment')
-
-	// comment.innerHTML = createComment(element, 'comment')
-	// textbox.append(comment)
 	textbox.append(createComment(element, 'comment'))
 
 	let replies = element.replies ?? false
@@ -47,12 +40,6 @@ export function renderComments(element) {
 		textbox.append(replyArea)
 
 		replies.forEach(rep => {
-			// const reply = document.createElement('div')
-			// reply.classList.add('reply')
-			// reply.setAttribute('role', 'reply')
-
-			// reply.innerHTML = createComment(rep, 'reply')
-			// replyArea.append(reply)
 			replyArea.append(createComment(rep, 'reply'))
 		})
 	}
@@ -92,7 +79,6 @@ function createComment({ content, createdAt, score, user, replyingTo }, role) {
     `
 
 	commentBox.innerHTML = commentData
-	// return commentData
 	return commentBox
 }
 
@@ -166,16 +152,17 @@ function handleComment(e, action) {
 
 	if (action === 'edit') {
 		let allText = commentContainer.querySelector('.text-area').innerText
-		replying = allText.split(' ').shift()
-		text = allText
+		let replying = allText.split(' ').shift()
+		replyingTo = allText.split(' ').shift().slice(1)
+		let oldContent = allText
 			.split(' ')
 			.filter(word => word !== replying)
 			.join(' ')
-		data = commentContainer.querySelector('.user-area__timestamp').textContent
+		createdAt = commentContainer.querySelector('.user-area__timestamp').textContent
 		score = commentContainer.querySelector('.counter-area__score').value
 
 		commentContainer.remove()
-		parentOfCommentContainer.append(createLoggedUserCommentContainer(text, loggedUser.image, 'update'))
+		parentOfCommentContainer.append(createLoggedUserCommentContainer(oldContent, loggedUser.image, 'update'))
 	}
 }
 
@@ -195,7 +182,10 @@ chatBox.addEventListener('click', e => {
 	}
 
 	if (e.target.classList.contains('btn--update')) {
-		// createComment(text, data, score, loggedUser, replyingTo)
-		parentOfCommentContainer.append(createComment(text, data, score, loggedUser, replying))
+		let parent = e.target.parentElement
+		let content = parent.firstElementChild.value
+
+		parentOfCommentContainer.append(createComment({ content, createdAt, score, loggedUser, replyingTo }, 'reply'))
+		parent.remove()
 	}
 })
