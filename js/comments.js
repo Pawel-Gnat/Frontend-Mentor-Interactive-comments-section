@@ -6,6 +6,8 @@ let score
 let commentContainer
 let parentOfCommentContainer
 let replyingTo
+let role
+let replyArea
 
 export function getUserInfo(user) {
 	loggedUser = {
@@ -32,9 +34,9 @@ export function renderComments(element) {
 
 	textbox.append(createComment(element, 'comment'))
 
-	let replies = element.replies ?? false
+	let replies = element.replies
 
-	if (replies.length > 0) {
+	if (replies) {
 		const replyArea = document.createElement('div')
 		replyArea.classList.add('replyarea')
 		textbox.append(replyArea)
@@ -145,6 +147,7 @@ function createLoggedUserCommentContainer(text, image, action) {
 function handleComment(e, action) {
 	commentContainer = e.target.parentElement.parentElement
 	parentOfCommentContainer = commentContainer.parentElement
+	role = commentContainer.getAttribute('role')
 
 	if (action === 'remove') {
 		commentContainer.remove()
@@ -164,11 +167,29 @@ function handleComment(e, action) {
 		commentContainer.remove()
 		parentOfCommentContainer.append(createLoggedUserCommentContainer(oldContent, loggedUser.image, 'update'))
 	}
+
+	if (action === 'reply') {
+		replyingTo = commentContainer.querySelector('figcaption').textContent
+		replyArea = parentOfCommentContainer
+
+		if (commentContainer.getAttribute('role') === 'comment') {
+			replyArea = commentContainer.nextElementSibling
+		}
+
+		replyArea.append(createLoggedUserCommentContainer('', loggedUser.image, 'reply'))
+	}
 }
 
 sendNewCommentBtn.addEventListener('click', createNewComment)
 
 chatBox.addEventListener('click', e => {
+	if (e.target.type !== 'button') {
+		return
+	}
+
+	let parent = e.target.parentElement
+	let content = parent.firstElementChild.value
+
 	if (e.target.classList.contains('btn--delete')) {
 		handleComment(e, 'remove')
 	}
@@ -177,15 +198,17 @@ chatBox.addEventListener('click', e => {
 		handleComment(e, 'edit')
 	}
 
-	if (e.target.classList.contains('btn--reply')) {
+	if (e.target.classList.contains('btn--reply') && !e.target.classList.contains('btn--user')) {
 		handleComment(e, 'reply')
 	}
 
 	if (e.target.classList.contains('btn--update')) {
-		let parent = e.target.parentElement
-		let content = parent.firstElementChild.value
+		parentOfCommentContainer.append(createComment({ content, createdAt, score, loggedUser, replyingTo }, role))
+		parent.remove()
+	}
 
-		parentOfCommentContainer.append(createComment({ content, createdAt, score, loggedUser, replyingTo }, 'reply'))
+	if (e.target.classList.contains('btn--reply') && e.target.classList.contains('btn--user')) {
+		replyArea.append(createComment({ content, createdAt: 'now', score: 0, loggedUser, replyingTo }, role))
 		parent.remove()
 	}
 })
