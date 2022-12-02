@@ -1,6 +1,7 @@
 const sendNewCommentBtn = document.querySelector('#btn-send')
 const chatBox = document.querySelector('.chatbox')
 const commentModalWindow = document.querySelector('#comment-delete')
+// const counter = Array.from(document.querySelectorAll('.counter-area'))
 const body = document.querySelector('body')
 let loggedUser = {}
 let createdAt
@@ -18,6 +19,7 @@ export function getUserInfo(user) {
 		displayImage: function () {
 			renderLoggedUserCommentHandler(this.image)
 		},
+		editmode: false,
 	}
 }
 
@@ -83,6 +85,7 @@ function createComment({ content, createdAt, score, user, replyingTo }, role) {
     `
 
 	commentBox.innerHTML = commentData
+	loggedUser.editmode = false
 	return commentBox
 }
 
@@ -147,6 +150,8 @@ function createLoggedUserCommentContainer(text, image, action) {
 }
 
 function handleComment(e, action) {
+	loggedUser.editmode = true
+
 	commentContainer = e.target.parentElement.parentElement
 	parentOfCommentContainer = commentContainer.parentElement
 	role = commentContainer.getAttribute('role')
@@ -157,7 +162,6 @@ function handleComment(e, action) {
 	}
 
 	if (action === 'edit') {
-		let author = commentContainer.querySelector('figcaption').textContent
 		let allText = commentContainer.querySelector('.text-area').innerText
 		let replying = allText.split(' ').shift()
 		replyingTo = allText.split(' ').shift().slice(1)
@@ -191,7 +195,11 @@ function handleComment(e, action) {
 	}
 }
 
-sendNewCommentBtn.addEventListener('click', createNewComment)
+sendNewCommentBtn.addEventListener('click', () => {
+	if (!loggedUser.editmode) {
+		createNewComment()
+	}
+})
 
 chatBox.addEventListener('click', e => {
 	if (e.target.type !== 'button') {
@@ -201,16 +209,18 @@ chatBox.addEventListener('click', e => {
 	let parent = e.target.parentElement
 	let content = parent.firstElementChild.value
 
-	if (e.target.classList.contains('btn--delete')) {
-		handleComment(e, 'remove')
-	}
+	if (!loggedUser.editmode) {
+		if (e.target.classList.contains('btn--delete')) {
+			handleComment(e, 'remove')
+		}
 
-	if (e.target.classList.contains('btn--edit')) {
-		handleComment(e, 'edit')
-	}
+		if (e.target.classList.contains('btn--edit')) {
+			handleComment(e, 'edit')
+		}
 
-	if (e.target.classList.contains('btn--reply') && !e.target.classList.contains('btn--user')) {
-		handleComment(e, 'reply')
+		if (e.target.classList.contains('btn--reply') && !e.target.classList.contains('btn--user')) {
+			handleComment(e, 'reply')
+		}
 	}
 
 	if (e.target.classList.contains('btn--update')) {
@@ -233,4 +243,6 @@ commentModalWindow.addEventListener('click', e => {
 	if (e.target.classList.contains('btn--modal-delete')) {
 		commentContainer.remove()
 	}
+
+	loggedUser.editmode = false
 })
