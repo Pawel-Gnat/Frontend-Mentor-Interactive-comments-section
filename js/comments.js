@@ -157,6 +157,7 @@ function handleComment(e, action) {
 	}
 
 	if (action === 'edit') {
+		let author = commentContainer.querySelector('figcaption').textContent
 		let allText = commentContainer.querySelector('.text-area').innerText
 		let replying = allText.split(' ').shift()
 		replyingTo = allText.split(' ').shift().slice(1)
@@ -164,6 +165,12 @@ function handleComment(e, action) {
 			.split(' ')
 			.filter(word => word !== replying)
 			.join(' ')
+
+		if (commentContainer.getAttribute('role') === 'comment') {
+			oldContent = allText
+			replyingTo = null
+		}
+
 		createdAt = commentContainer.querySelector('.user-area__timestamp').textContent
 		score = commentContainer.querySelector('.counter-area__score').value
 
@@ -174,6 +181,7 @@ function handleComment(e, action) {
 	if (action === 'reply') {
 		replyingTo = commentContainer.querySelector('figcaption').textContent
 		replyArea = parentOfCommentContainer
+		role = 'reply'
 
 		if (commentContainer.getAttribute('role') === 'comment') {
 			replyArea = commentContainer.nextElementSibling
